@@ -1,5 +1,6 @@
 // This is javascript file for NNA portfolio
 
+// data section
 const skill_array = [
   "Golang",
   "Python",
@@ -9,8 +10,7 @@ const skill_array = [
   "OpenShift",
   "Webdev",
   "NoSQL",
-  "Wails",
-  "Apache Ant",
+  "Pytest",
 ];
 const work_experience = [
   {
@@ -36,11 +36,15 @@ const work_experience = [
   },
 ];
 
-var luminanceMode = "dark";
+
+// start here
+var luminanceMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; // reading from device preferences
+
 let lumToggler = document.querySelector(".lum-mode");
 let icons = document.querySelectorAll(".ext-icon");
 var root_element = document.querySelector(":root");
 
+// grid creator for background
 function makeGrid(row, col) {
   const back_grid = document.querySelector(".back-grid");
   back_grid.style.setProperty("--gr", row);
@@ -53,6 +57,7 @@ function makeGrid(row, col) {
   }
 }
 
+// populate skills from data
 function populateSkills() {
   const skill_grid = document.querySelector(".skill-grid");
 
@@ -64,6 +69,7 @@ function populateSkills() {
   });
 }
 
+// populate experience from data
 function populateExperience() {
   const work_list = document.querySelector(".work-list");
 
@@ -97,9 +103,9 @@ function populateExperience() {
   });
 }
 
-function toggleLuminanceMode() {
-  if (luminanceMode == "light") {
-    // lumToggler.innerHTML = '<i class="fa-solid fa-sun"></i>'
+// apply css vars for the current lumincanceMode
+function applyLuminanceMode() {
+  if (luminanceMode === "dark") {
     lumToggler.classList.add("lum-light");
     lumToggler.classList.remove("lum-dark");
     icons.forEach((i) => {
@@ -112,9 +118,7 @@ function toggleLuminanceMode() {
     root_element.style.setProperty("--w0", "#ffffff");
     root_element.style.setProperty("--g1", "#b8b8b8");
     root_element.style.setProperty("--p1", "#6e70fa");
-    luminanceMode = "dark";
   } else {
-    // lumToggler.innerHTML = '<i class="fa-solid fa-moon"></i>'
     lumToggler.classList.add("lum-dark");
     lumToggler.classList.remove("lum-light");
     icons.forEach((i) => {
@@ -127,73 +131,87 @@ function toggleLuminanceMode() {
     root_element.style.setProperty("--w0", "#000");
     root_element.style.setProperty("--g1", "#121212");
     root_element.style.setProperty("--p1", "#6e70fa");
-    luminanceMode = "light";
   }
 }
 
-function getLink() {
-  // console.log(this.href.split('#')[1])
-  nav_links.forEach((i) => {
-    i.classList.remove("nav-link-active");
-  });
-  this.classList.add("nav-link-active");
+// toggler function for lumincance mode
+function toggleLuminanceMode() {
+  luminanceMode = luminanceMode === "dark" ? "light" : "dark";
+  applyLuminanceMode();
 }
 
+// navlink related
+// function getLink() {
+//   // console.log(this.href.split('#')[1])
+//   nav_links.forEach((i) => {
+//     i.classList.remove("nav-link-active");
+//   });
+//   this.classList.add("nav-link-active");
+// }
+
+// core
+applyLuminanceMode();
 makeGrid(50, 50);
 populateSkills();
 populateExperience();
 
-lumToggler.addEventListener("click", toggleLuminanceMode);
-// lumToggler.innerHTML = '<i class="fa-solid fa-sun"></i>'
 
-let nav_links = document.querySelectorAll(".nav-link");
+// watcher for device preference changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  luminanceMode = e.matches ? 'dark' : 'light';
+  applyLuminanceMode();
+});
+
+lumToggler.addEventListener("click", toggleLuminanceMode);
+
+// let nav_links = document.querySelectorAll(".nav-link");
 let sections = document.querySelectorAll(".section-cont");
 
-// click handler
-nav_links.forEach((i) => {
-  i.addEventListener("click", getLink);
-});
+// click handler for navlink
+// nav_links.forEach((i) => {
+//   i.addEventListener("click", getLink);
+// });
 
-// intersection handler
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute("id");
-        nav_links.forEach((i) => {
-          i.classList.toggle("nav-link-active", i.getAttribute("href")===`#${id}`)
-        });
-      }
-    });
-  },
-  {
-    threshold:0,
-    rootMargin: "-25% 0px -75% 0px",
-  }
-)
-sections.forEach((sec) => {
-  observer.observe(sec)
-})
+// intersection handler: logic to toggle navlink based on what is present on screen and what is present on url
+// const observer = new IntersectionObserver(
+//   (entries) => {
+//     entries.forEach((entry) => {
+//       if (entry.isIntersecting) {
+//         const id = entry.target.getAttribute("id");
+//         nav_links.forEach((i) => {
+//           i.classList.toggle("nav-link-active", i.getAttribute("href")===`#${id}`)
+//         });
+//       }
+//     });
+//   },
+//   {
+//     threshold:0,
+//     rootMargin: "-25% 0px -75% 0px",
+//   }
+// )
+// sections.forEach((sec) => {
+//   observer.observe(sec)
+// })
 
-window.addEventListener("load", (event) => {
-  let sec = window.location.href.split("#")[1];
-  nav_links.forEach((i) => {
-    if (String(i.children[0].children[1].innerText).toLowerCase() == sec) {
-      i.classList.add("nav-link-active");
-    }
-  });
-  if (sec == undefined) {
-    nav_links[0].classList.add("nav-link-active");
-  }
-});
+// window.addEventListener("load", (event) => {
+//   let sec = window.location.href.split("#")[1];
+//   nav_links.forEach((i) => {
+//     if (String(i.children[0].children[1].innerText).toLowerCase() == sec) {
+//       i.classList.add("nav-link-active");
+//     }
+//   });
+//   if (sec == undefined) {
+//     nav_links[0].classList.add("nav-link-active");
+//   }
+// });
 
-window.addEventListener("hashchange", (e) => {
-  let section = e.newURL.split("#")[1];
-  nav_links.forEach((i) => {
-    if (String(i.children[0].children[1].innerText).toLowerCase() == section) {
-      i.classList.add("nav-link-active");
-    } else {
-      i.classList.remove("nav-link-active");
-    }
-  });
-});
+// window.addEventListener("hashchange", (e) => {
+//   let section = e.newURL.split("#")[1];
+//   nav_links.forEach((i) => {
+//     if (String(i.children[0].children[1].innerText).toLowerCase() == section) {
+//       i.classList.add("nav-link-active");
+//     } else {
+//       i.classList.remove("nav-link-active");
+//     }
+//   });
+// });
