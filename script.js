@@ -8,8 +8,10 @@ const skill_array = [
   "Openstack",
   "Kubernetes",
   "OpenShift",
+  "Helm",
   "Webdev",
   "NoSQL",
+  "Ansible",
   "Pytest",
 ];
 const work_experience = [
@@ -28,7 +30,7 @@ const work_experience = [
       "Developed high quality automation code (primarily using Ansible) for internal projects using a wide variety of technologies. Part of the development team for a high performance HTTP loadbalancer/router application to forward TS.43 token requests.",
   },
   {
-    duration: "JAN - JULY 2023",
+    duration: "JAN 2023 - JULY 2023",
     title: "R & D Intern",
     company: "HPE",
     description:
