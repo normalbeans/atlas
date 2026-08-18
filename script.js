@@ -16,11 +16,18 @@ const skill_array = [
 ];
 const work_experience = [
   {
-    duration: "NOV 2024 - PRESENT",
+    duration: "AUG 2026 - PRESENT",
+    title: "Software Engineer",
+    company: "IBM ISDL",
+    description:
+      "Working as a backend engineer with the PowerVC Build team.",
+  },
+  {
+    duration: "NOV 2024 - AUG 2026",
     title: "Senior Software Developer",
     company: "HCLTech",
     description:
-      "Currently working on building RADIUS and RadSec applications and deploying them across Cluster and VM environments. Involved in end-to-end release activities from development, testing and deployment to integration with other dependent applications and documentation.",
+      "Built HTTP, RADIUS and RadSec applications and deployed them across Cluster and VM environments. Involved in end-to-end release activities from development, testing and deployment to integration with other dependent applications and documentation.",
   },
   {
     duration: "AUG 2023 - OCT 2023",
@@ -153,7 +160,7 @@ function toggleLuminanceMode() {
 
 // core
 applyLuminanceMode();
-makeGrid(50, 50);
+// makeGrid(50, 50);
 populateSkills();
 populateExperience();
 
